@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Generator</title>
+    <style>
+      :root {
+        --baseColor: #606468;
+      }
+
+      .grid {
+        inline-size: 90%;
+        margin-inline: auto;
+        max-inline-size: 20rem;
+        display: grid;
+      }
+
+      :root {
+        --bodyColor: var(--baseColor);
+        --bodyFontFamily: "Open Sans";
+        --bodyFontFamilyFallback: sans-serif;
+        --bodyFontSize: 0.875rem;
+        --bodyFontWeight: 400;
+        --bodyLineHeight: 1.5;
+      }
+
+      * {
+        box-sizing: inherit;
+      }
+
+      body {
+        background-color: #342d34;
+        color: white;
+        font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback);
+        font-size: var(--bodyFontSize);
+        font-weight: var(--bodyFontWeight);
+        line-height: var(--bodyLineHeight);
+        margin: 0;
+        min-block-size: 100vh;
+        display: grid;
+        place-items: center;
+      }
+
+      input {
+        background-image: none;
+        border: 0;
+        color: inherit;
+        font: inherit;
+        outline: 0;
+        transition: background-color 0.3s;
+      }
+
+      textarea {
+        background-image: none;
+        border: 0;
+        color: inherit;
+        font: inherit;
+        outline: 0;
+        transition: background-color 0.3s;
+      }
+
+      input[type="submit"] {
+        cursor: pointer;
+      }
+
+      textarea,
+      option,
+      input[type="submit"] {
+        inline-size: 100%;
+      }
+
+      :root {
+        --loginBorderRadus: 0.25rem;
+
+        --loginInputBackgroundColor: #3b4148;
+        --loginInputHoverBackgroundColor: #434a52;
+
+        --loginSubmitColor: #eee;
+      }
+
+      textarea,
+      option {
+        background-color: var(--loginInputBackgroundColor);
+        border-radius: var(--loginBorderRadus);
+        padding: 1rem;
+      }
+
+      textarea:focus,
+      textarea:hover {
+        background-color: var(--loginInputHoverBackgroundColor);
+      }
+
+      input[type="submit"] {
+        border-radius: var(--loginBorderRadus);
+        padding: 1rem;
+        background-color: #d75821;
+        color: var(--loginSubmitColor);
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      input[type="submit"]:focus,
+      input[type="submit"]:hover {
+        background-color: #ec6227;
+        color: rgb(231, 224, 224);
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function genQR(p) {
+        var gapi = `https://api.qrserver.com/v1/create-qr-code/?size=`;
+        // var gapi =
+        // "https://chart.googleapis.com/chart?chf=bg,s,65432100&cht=qr&chs=";
+        var myimg = document.getElementById("img");
+        var mytext = document.getElementById("qrtext").value;
+        var mytext2 = document.getElementById("qrtext2").value;
+        var mytext3 = document.getElementById("qrtext3").value;
+        var randomid = p;
+        if (mytext !== "" && mytext2 !== "" && mytext3 !== "") {
+          myimg.src =
+            gapi +
+            `250x250&data=Email: ` +
+            `${mytext}` +
+            `%0A` +
+            `Name: ` +
+            `${mytext2}` +
+            `%0A` +
+            `Mobile No: ` +
+            `${mytext3}` +
+            `%0A` +
+            `ID: ` +
+            `${randomid}`;
+          // "250x250" +
+          // "&chl=" +
+          // "Email: " +
+          // mytext +
+          // "%0A" +
+          // "Name: " +
+          // mytext2 +
+          // "%0A" +
+          // "Mobile No: " +
+          // mytext3 +
+          // "%0A" +
+          // "ID: " +
+          // randomid;
+        } else {
+          alert("Please Enter Text");
+        }
+      }
+
+      function random() {
+        var mytext = document.getElementById("qrtext").value;
+        var mytext2 = document.getElementById("qrtext2").value;
+        var mytext3 = document.getElementById("qrtext3").value;
+
+        if (mytext !== "" && mytext2 !== "" && mytext3 !== "") {
+          var q = Math.floor(Math.random() * 9000) + 1000;
+          document.getElementById("rand").innerHTML = "ID: " + q;
+          genQR(q);
+        } else {
+          alert("Please Enter Text");
+        }
+      }
+    </script>
+    <div class="grid">
+      <center>
+        <h2 align="center">Qr Code Generator</h2>
+        <img src="" id="img" />
+        <h3 id="rand"></h3>
+        <textarea placeholder="Enter Your Email" id="qrtext"></textarea>
+        <br /><br />
+        <textarea placeholder="Enter Your Name" id="qrtext2"></textarea>
+        <br /><br />
+        <textarea placeholder="Enter Mobile Number" id="qrtext3"></textarea>
+        <br /><br />
+        <input
+          id="generate"
+          type="submit"
+          value="Generate"
+          onclick="random();"
+        />
+      </center>
+    </div>
+  </body>
+</html>
